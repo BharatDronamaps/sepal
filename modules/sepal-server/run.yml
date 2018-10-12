@@ -17,6 +17,10 @@
     restart_policy: "{{ restart_policy }}"
     network_mode: "{{ network_mode }}"
     log_driver: syslog
+    sysctls:
+      net.ipv4.tcp_keepalive_time: 10
+      net.ipv4.tcp_keepalive_intvl: 10
+      net.ipv4.tcp_keepalive_probes: 6
     log_opt:
       syslog-address: "{{ syslog_address }}"
       tag: "sepal"
