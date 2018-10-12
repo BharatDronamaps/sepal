@@ -49,21 +49,37 @@
     name: docker-ce
     state: present
 
-- name: Set DOCKER_OPTS
-  lineinfile:
-    dest: "/etc/default/docker"
-    regexp: "^DOCKER_OPTS="
-    line: 'DOCKER_OPTS="-H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock -g /data/docker/storage --storage-driver=devicemapper --storage-opt dm.basesize=10G"'
-
 - name: Install pip
   apt:
     name: python-pip
     state: present
 
-
 - name: Install docker-py
   pip:
     name: docker-py
 
+- name: Copy daemon.json file
+  copy:
+    src: "daemon.json"
+    dest: "/etc/docker/daemon.json"
+  register: daemon_json
+
+- name: Removed flags on dockerd
+  replace:
+    path: "/lib/systemd/system/docker.service"
+    regexp: "^ExecStart.*$"
+    replace: "ExecStart=/usr/bin/dockerd"
+    backup: yes
+  register: docker_service
+
+- name: Restart Docker
+  systemd:
+    state: restarted
+    daemon_reload: yes
+    name: docker
+  when: daemon_json.changed or docker_service.changed
+
 - name: Start Docker
-  service: name=docker state=started
+  systemd:
+    state: started
+    name: docker

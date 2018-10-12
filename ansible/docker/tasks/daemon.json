@@ -1,0 +1,6 @@
+{
+  "hosts": ["unix:///var/run/docker.sock", "tcp://0.0.0.0:2375"],
+  "data-root": "/data/docker/storage",
+  "storage-driver": "devicemapper",
+  "storage-opts": ["dm.basesize=10G"]
+}
