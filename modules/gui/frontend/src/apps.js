@@ -50,7 +50,7 @@ export const loadApps$ = () =>
             }
             return actionBuilder('SET_APPS')
                 .set('apps.list', [rStudio, jupyter, ...apps])
-                .build()
+                .dispatch()
         })
     )
 
@@ -80,7 +80,7 @@ export const runApp$ = path => {
         )),
         map(() => actionBuilder('APP_INITIALIZED', {app})
             .set(['apps', 'state', app.path], {state: 'INITIALIZED', app})
-            .build()
+            .dispatch()
         ),
         catchError(() => {
             quitApp(app.path)

@@ -1,5 +1,4 @@
 import {CenteredProgress} from 'widget/progress'
-import {Content, SectionLayout} from 'widget/sectionLayout'
 import {appReady, appState} from 'apps'
 import {connect} from 'store'
 import {msg} from 'translate'
@@ -25,20 +24,18 @@ class IFrame extends React.Component {
         return appState === 'REQUESTED'
             ? this.initializing(label, alt)
             : (
-                <SectionLayout>
-                    <Content appMenuPadding>
-                        {appState !== 'READY' && this.loading(label, alt)}
-                        <iframe
-                            width='100%'
-                            height='100%'
-                            frameBorder='0'
-                            src={'/api' + path}
-                            title={label || alt}
-                            style={{display: appState === 'READY' ? 'block' : 'none'}}
-                            onLoad={() => appReady(this.props.app)}
-                        />
-                    </Content>
-                </SectionLayout>
+                <React.Fragment>
+                    {appState !== 'READY' && this.loading(label, alt)}
+                    <iframe
+                        width='100%'
+                        height='100%'
+                        frameBorder='0'
+                        src={'/api' + path}
+                        title={label || alt}
+                        style={{display: appState === 'READY' ? 'block' : 'none'}}
+                        onLoad={() => appReady(this.props.app)}
+                    />
+                </React.Fragment>
             )
     }
 }

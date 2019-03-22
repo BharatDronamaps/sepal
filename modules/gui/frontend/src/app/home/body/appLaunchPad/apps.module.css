@@ -1,0 +1,50 @@
+.apps {
+    --app-height: 9rem;
+    height: 100%;
+    width: 100%;
+    pointer-events: all;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 20rem);
+    grid-template-rows: repeat(auto-fill, var(--app-height));
+    grid-gap: 2rem;
+    justify-content: center;
+    overflow: scroll;
+}
+
+.app {
+    height: var(--app-height);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.app i {
+    border: 1px solid hsla(0, 0%, 100%, .2);
+    border-radius: 50%;
+    height: 3rem;
+    width: 3rem;
+    line-height: 3rem;
+    margin-right: .3rem;
+}
+
+.app svg {
+    font-size: 1.4rem;
+}
+
+.app img {
+    width: 50%;
+}
+
+.app .title {
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.app .description {
+    margin-top: .3rem;
+    color: #ababab;
+    line-height: 1.2;
+}
